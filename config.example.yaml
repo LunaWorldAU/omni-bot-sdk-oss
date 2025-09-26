@@ -100,8 +100,8 @@ rpa:
   long_term_rate: 0.25
   long_term_capacity: 10
   window_titles:
-    main: WeChat
-    preview: 预览  
+    main: 微信
+    preview: 预览
     add_friend: 通过朋友验证
     invite_member: 微信添加群成员
     remove_member: 微信移出群成员
