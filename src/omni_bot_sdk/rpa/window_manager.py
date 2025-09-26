@@ -40,7 +40,7 @@ class WindowTypeEnum(Enum):
     似乎微信4.x 的类名都是 Qt51514QWindowIcon，切记不可直接用类名，万一更新Qt版本就完蛋拉~
     """
 
-    MainWindow = "MainWindow"  # <Win32Window left="0", top="0", width="1008", height="1360", title="WeChat">
+    MainWindow = "MainWindow"  # <Win32Window left="0", top="0", width="1008", height="1360", title="微信">
     InviteMemberWindow = "InviteMemberWindow"  # <Win32Window left="34", top="310", width="938", height="738", title="微信添加群成员">
     InviteConfirmWindow = "InviteConfirmWindow"  # <Win32Window left="298", top="536", width="413", height="288", title="Weixin">
     InviteResonWindow = "InviteResonWindow"  # <Win32Window left="298", top="505", width="413", height="350", title="Weixin">
