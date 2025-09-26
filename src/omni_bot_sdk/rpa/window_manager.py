@@ -61,9 +61,9 @@ class WindowTitleEnum(Enum):
     窗口标题配置键名枚举
     用于从config中获取对应的窗口标题列表
     """
-    
+
     MAIN = "main"
-    PREVIEW = "preview" 
+    PREVIEW = "preview"
     ADD_FRIEND = "add_friend"
     INVITE_MEMBER = "invite_member"
     REMOVE_MEMBER = "remove_member"
@@ -131,7 +131,7 @@ class WindowManager:
             self.rpa_config.get("search_contact_offset", (0, 40))
         )
         self.color_ranges = self.rpa_config.get("color_ranges", {})
-        
+
         # 获取可配置的窗口标题
         self.window_titles = self.rpa_config.get("window_titles", {})
 
@@ -151,7 +151,7 @@ class WindowManager:
             WindowTitleEnum.ROOM_INPUT_CONFIRM_BOX: "Weixin",
             WindowTitleEnum.SEARCH_CONTACT_WINDOW: "Weixin",
             WindowTitleEnum.PUBLIC_ANNOUNCEMENT_SUFFIX: "的群公告",
-            WindowTitleEnum.YUANBAO: "元宝"
+            WindowTitleEnum.YUANBAO: "元宝",
         }
         return self.window_titles.get(title_key.value, defaults.get(title_key, ""))
 
@@ -159,7 +159,7 @@ class WindowManager:
         """检查窗口标题是否匹配配置的标题"""
         expected_title = self.get_window_title(title_key)
         return window_title == expected_title
-    
+
     def _title_endswith(self, window_title: str, title_key: WindowTitleEnum) -> bool:
         """检查窗口标题是否以指定后缀结尾"""
         suffix = self.get_window_title(title_key)
@@ -215,21 +215,21 @@ class WindowManager:
                     windows = pyautogui.getWindowsWithTitle(main_title)
                     if windows:
                         main_window = windows[0]
-                    
+
                     if main_window:
                         self.weixin_windows[main_title] = {
                             "window": main_window,
-                        "MSG_TOP_X": self.MSG_TOP_X,
-                        "MSG_TOP_Y": self.MSG_TOP_Y,
-                        "MSG_WIDTH": self.MSG_WIDTH,
-                        "MSG_HEIGHT": self.MSG_HEIGHT,
-                        "region": [
-                            0,
-                            0,
-                            self.size_config.width,
-                            self.size_config.height,
-                        ],
-                    }
+                            "MSG_TOP_X": self.MSG_TOP_X,
+                            "MSG_TOP_Y": self.MSG_TOP_Y,
+                            "MSG_WIDTH": self.MSG_WIDTH,
+                            "MSG_HEIGHT": self.MSG_HEIGHT,
+                            "region": [
+                                0,
+                                0,
+                                self.size_config.width,
+                                self.size_config.height,
+                            ],
+                        }
                     return True
                 return False
             else:
@@ -643,14 +643,14 @@ class WindowManager:
         for window in windows:
             if self._title_matches(window.title, WindowTitleEnum.PREVIEW):
                 window.close()
-        
+
         # 尝试找到主窗口
         chat_window = None
         main_title = self.get_window_title(WindowTitleEnum.MAIN)
         windows_with_title = pyautogui.getWindowsWithTitle(main_title)
         if windows_with_title:
             chat_window = windows_with_title[0]
-        
+
         if chat_window:
             self._activate_window(chat_window.title)
             if reposition:
@@ -940,11 +940,15 @@ class WindowManager:
                     return window
         elif windowType == WindowTypeEnum.PublicAnnouncementWindow:
             for window in filter_windows:
-                if self._title_endswith(window.title, WindowTitleEnum.PUBLIC_ANNOUNCEMENT_SUFFIX):
+                if self._title_endswith(
+                    window.title, WindowTitleEnum.PUBLIC_ANNOUNCEMENT_SUFFIX
+                ):
                     return window
         elif windowType == WindowTypeEnum.RoomInputConfirmBox:
             for window in filter_windows:
-                if self._title_matches(window.title, WindowTitleEnum.ROOM_INPUT_CONFIRM_BOX):
+                if self._title_matches(
+                    window.title, WindowTitleEnum.ROOM_INPUT_CONFIRM_BOX
+                ):
                     if (
                         window.left + window.width < self.size_config.width
                         and window.top + window.height < self.size_config.height
@@ -957,7 +961,9 @@ class WindowManager:
                         return window
         elif windowType == WindowTypeEnum.SearchContactWindow:
             for window in filter_windows:
-                if self._title_matches(window.title, WindowTitleEnum.SEARCH_CONTACT_WINDOW):
+                if self._title_matches(
+                    window.title, WindowTitleEnum.SEARCH_CONTACT_WINDOW
+                ):
                     # 这里固定在左上角，所以要判断以下开始位置在左上角
                     if (
                         window.left < self.SIDE_BAR_WIDTH
