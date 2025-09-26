@@ -66,7 +66,7 @@ class Bot:
         self._status_callbacks = []  # 状态变更回调列表
 
         # 用户服务与用户信息初始化
-        self.user_service: UserService = UserService(self.config.get("dbkey"))
+        self.user_service: UserService = UserService(self.config.get("dbkey"), self.config.get("user"))
         self.user_info: UserInfo = self.user_service.get_user_info()
         allow_versions = ["4.0.6.33"]
         if self.user_info.version not in allow_versions:
