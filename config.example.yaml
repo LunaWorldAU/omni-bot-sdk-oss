@@ -113,6 +113,7 @@ rpa:
     room_input_confirm_box: Weixin
     search_contact_window: Weixin
     public_announcement_suffix: 的群公告
+    yuanbao: 元宝
 
 
 wxgf:

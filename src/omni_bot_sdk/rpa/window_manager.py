@@ -75,6 +75,7 @@ class WindowTitleEnum(Enum):
     ROOM_INPUT_CONFIRM_BOX = "room_input_confirm_box"
     SEARCH_CONTACT_WINDOW = "search_contact_window"
     PUBLIC_ANNOUNCEMENT_SUFFIX = "public_announcement_suffix"
+    YUANBAO = "yuanbao"  # 元宝窗口
 
 
 class WindowManager:
@@ -149,7 +150,8 @@ class WindowManager:
             WindowTitleEnum.MENU_WINDOW: "Weixin",
             WindowTitleEnum.ROOM_INPUT_CONFIRM_BOX: "Weixin",
             WindowTitleEnum.SEARCH_CONTACT_WINDOW: "Weixin",
-            WindowTitleEnum.PUBLIC_ANNOUNCEMENT_SUFFIX: "的群公告"
+            WindowTitleEnum.PUBLIC_ANNOUNCEMENT_SUFFIX: "的群公告",
+            WindowTitleEnum.YUANBAO: "元宝"
         }
         return self.window_titles.get(title_key.value, defaults.get(title_key, ""))
 
@@ -513,8 +515,9 @@ class WindowManager:
     def init_split_sessions(self):
         """初始化分割的会话"""
         windows = pyautogui.getAllWindows()
+        yuanbao_title = self.get_window_title(WindowTitleEnum.YUANBAO)
         for window in windows:
-            if "元宝" in window.title:
+            if yuanbao_title in window.title:
                 self.logger.info("元宝窗口独立设置")
                 self.weixin_windows[window.title] = {
                     "window": window,
@@ -669,8 +672,10 @@ class WindowManager:
             self.logger.error("微信窗口未找到，请检查微信是否正常运行")
             return False
 
-    def _activate_window(self, title: str = "WeChat"):
+    def _activate_window(self, title: str = None):
         """激活微信窗口"""
+        if title is None:
+            title = self.get_window_title(WindowTitleEnum.MAIN)
         try:
             window = pyautogui.getWindowsWithTitle(title)[0]
             window.activate()
@@ -1037,6 +1042,7 @@ class WindowManager:
         关闭所有窗口
         """
         windows = pyautogui.getAllWindows()
+        main_title = self.get_window_title(WindowTitleEnum.MAIN)
         # 这里保留全部符合的窗口
         for window in windows:
             # 对所有的窗口进行过滤，排除掉不可见的，尺寸为0的
@@ -1044,7 +1050,7 @@ class WindowManager:
                 # 这一步要过滤一下非微信的窗口
                 class_name = win32gui.GetClassName(window._hWnd)
                 if class_name.startswith("Qt5"):
-                    if window.title != "WeChat":
+                    if window.title != main_title:
                         window.close()
 
     def open_close_sidebar(self, close: bool = False) -> bool:
