@@ -1,5 +1,16 @@
 dbkey:   # 数据库加密密钥，必须设置
 
+# 用户和微信相关设置
+user:
+  fallback_user_info:
+    account: 微信号
+    alias: 昵称
+    nickname: 机器人
+    phone: ""
+    data_dir: 'C:\path\to\wechat\data'
+    avatar_url: ""
+
+
 # AES加密用的密钥和XOR，格式为字符串, 设置为空，自动查找
 # 示例：aes_xor_key: 1234567890,17
 aes_xor_key: 
@@ -88,6 +99,21 @@ rpa:
   short_term_capacity: 2
   long_term_rate: 0.25
   long_term_capacity: 10
+  window_titles:
+    main: WeChat
+    preview: 预览  
+    add_friend: 通过朋友验证
+    invite_member: 微信添加群成员
+    remove_member: 微信移出群成员
+    invite_confirm: Weixin
+    invite_reason: Weixin
+    search_history: 搜索聊天记录
+    friend: 朋友圈
+    menu_window: Weixin
+    room_input_confirm_box: Weixin
+    search_contact_window: Weixin
+    public_announcement_suffix: 的群公告
+
 
 wxgf:
   # 微信GF解析API地址，暂时未开放，查看roammap更新计划
